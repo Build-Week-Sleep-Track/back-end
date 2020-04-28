@@ -58,16 +58,7 @@ module.exports = {
       .andWhereBetween("sleep_start", [d1, d2]);
   },
 
-  //query to edit sleep_session data, requires user id, the sleep_session id and the info to update
-
-  editSleepInfo(id, sleep_id, info) {
-    return db("users_sleep")
-      .update(info, sleep_id)
-      .where({ uid: id })
-      .then(() => db("users_sleep").where({ id: sleep_id }));
-  },
-
-  editSleep1(id, info) {
+  editSleepInfo(id, info) {
     return db("users_sleep").where({ id }).update(info);
   },
 

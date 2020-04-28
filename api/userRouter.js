@@ -28,10 +28,11 @@ router.post("/:id", userAuth, (req, res) => {
 //PUT edits a sleep_session, requires user id and sleep_session id
 
 router.put("/:id/:post_id", userAuth, (req, res) => {
+  console.log(req.body);
   const { id, post_id } = req.params;
   const body = req.body;
 
-  Utils.editSleep1(id, body)
+  Utils.editSleepInfo(req.params.post_id, body)
     .then((updated) => res.status(201).json(updated))
     .catch((err) => res.status(500).json({ error: err }));
 });
