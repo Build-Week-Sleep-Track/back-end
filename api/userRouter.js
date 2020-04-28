@@ -5,8 +5,8 @@ const userAuth = require("./userAuthentication");
 
 //GET to a users route, resolves to array of all the users sleep_sessions
 
-router.get("/:id", userAuth, (req, res) => {
-  const { id } = req.params;
+router.get("/", (req, res) => {
+  const { id } = req.decrypted;
 
   Utils.allUserInfo(id)
     .then((user) => res.status(200).json(user))
@@ -15,9 +15,9 @@ router.get("/:id", userAuth, (req, res) => {
 
 //POST add a sleep_session to a users
 
-router.post("/:id", userAuth, (req, res) => {
+router.post("/", (req, res) => {
   const body = req.body;
-  const { id } = req.params;
+  const { id } = req.decrypted;
   const data = { ...body, uid: Number(id) };
 
   Utils.addUserInfo(data)
@@ -27,20 +27,21 @@ router.post("/:id", userAuth, (req, res) => {
 
 //PUT edits a sleep_session, requires user id and sleep_session id
 
-router.put("/:id/:post_id", userAuth, (req, res) => {
+router.put("/:id", (req, res) => {
   console.log(req.body);
-  const { id, post_id } = req.params;
+  const { id } = req.decrypted;
   const body = req.body;
 
-  Utils.editSleepInfo(req.params.post_id, body)
+  Utils.editSleepInfo(id, body)
     .then((updated) => res.status(201).json(updated))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 //DELETE deletes a sleep_session, requires user id and sleep_session id
 
-router.delete("/:id/:post_id", userAuth, (req, res) => {
-  const { id, post_id } = req.params;
+router.delete("/:post_id", (req, res) => {
+  const { post_id } = req.params;
+  const { id } = req.decrypted;
   Utils.deleteSleepSession(id, post_id)
     .then(() => res.sendStatus(204))
     .catch((err) => res.status(500).json({ error: err }));
@@ -48,7 +49,7 @@ router.delete("/:id/:post_id", userAuth, (req, res) => {
 
 //GET resolves to an array of dates that meet the start and end parameters set in the query string
 
-router.get("/:id/dates", userAuth, (req, res) => {
+router.get("/:id/dates", (req, res) => {
   const { id } = req.decrypted;
   const { start, end } = req.query;
 
