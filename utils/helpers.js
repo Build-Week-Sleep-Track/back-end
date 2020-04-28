@@ -1,6 +1,24 @@
 const db = require("../data/dbConfig");
 
 module.exports = {
+  //resolves to object with users info and a property called sessions, which is an array of all users sleep_sessions
+  allUserInfo(id) {
+    const user = db("users").where({ id }).first();
+    const sleep_sessions = db("users_sleep").where({ uid: id });
+
+    return Promise.all([user, sleep_sessions]).then(([u, s]) => {
+      const obj = {
+        user: {
+          id: u.id,
+          email: u.email,
+          first_name: u.first_name,
+          last_name: u.last_name,
+        },
+        sessions: s,
+      };
+      return obj;
+    });
+  },
   //adds user to the user database
 
   addUser(user) {
@@ -18,9 +36,9 @@ module.exports = {
 
   //resolves to sleep sessions for specified user
 
-  userInfo(id) {
-    return db("users_sleep").where({ uid: id });
-  },
+  //   userInfo(id) {
+  //     return db("users_sleep").where({ uid: id });
+  //   },
 
   //adds user sleep session
 

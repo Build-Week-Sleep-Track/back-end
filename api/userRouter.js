@@ -8,7 +8,7 @@ const userAuth = require("./userAuthentication");
 router.get("/:id", userAuth, (req, res) => {
   const { id } = req.params;
 
-  Utils.userInfo(id)
+  Utils.allUserInfo(id)
     .then((user) => res.status(200).json(user))
     .catch((err) => res.status(500).json({ error: err }));
 });
