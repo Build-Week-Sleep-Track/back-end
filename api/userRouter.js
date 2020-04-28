@@ -25,18 +25,18 @@ router.post("/:id", userAuth, (req, res) => {
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-//edits a sleep_session, requires user id and sleep_session id
+//PUT edits a sleep_session, requires user id and sleep_session id
 
 router.put("/:id/:post_id", userAuth, (req, res) => {
   const { id, post_id } = req.params;
   const body = req.body;
 
-  Utils.editSleepInfo(id, post_id, body)
+  Utils.editSleep1(id, body)
     .then((updated) => res.status(201).json(updated))
     .catch((err) => res.status(500).json({ error: err }));
 });
 
-//deletes a sleep_session, requires user id and sleep_session id
+//DELETE deletes a sleep_session, requires user id and sleep_session id
 
 router.delete("/:id/:post_id", userAuth, (req, res) => {
   const { id, post_id } = req.params;
@@ -44,6 +44,8 @@ router.delete("/:id/:post_id", userAuth, (req, res) => {
     .then(() => res.sendStatus(204))
     .catch((err) => res.status(500).json({ error: err }));
 });
+
+//GET resolves to an array of dates that meet the start and end parameters set in the query string
 
 router.get("/:id/dates", userAuth, (req, res) => {
   const { id } = req.decrypted;
