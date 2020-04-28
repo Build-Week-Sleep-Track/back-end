@@ -34,12 +34,6 @@ module.exports = {
       .then((u) => u);
   },
 
-  //resolves to sleep sessions for specified user
-
-  //   userInfo(id) {
-  //     return db("users_sleep").where({ uid: id });
-  //   },
-
   //adds user sleep session
 
   addUserInfo(user) {

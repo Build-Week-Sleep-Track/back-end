@@ -43,13 +43,19 @@ router.delete("/:post_id", (req, res) => {
   const { post_id } = req.params;
   const { id } = req.decrypted;
   Utils.deleteSleepSession(id, post_id)
-    .then(() => res.sendStatus(204))
+    .then((deleted) =>
+      deleted
+        ? res.status(200).json({
+            message: `session with id of ${post_id} successfully deleted`,
+          })
+        : res.status(404).json({ error: "session not found" })
+    )
     .catch((err) => res.status(500).json({ error: err }));
 });
 
 //GET resolves to an array of dates that meet the start and end parameters set in the query string
 
-router.get("/:id/dates", (req, res) => {
+router.get("/dates", (req, res) => {
   const { id } = req.decrypted;
   const { start, end } = req.query;
 
