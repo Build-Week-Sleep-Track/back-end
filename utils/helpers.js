@@ -49,7 +49,8 @@ module.exports = {
   findDates(id, d1, d2) {
     return db("users_sleep")
       .where({ uid: id })
-      .andWhereBetween("sleep_start", [d1, d2]);
+      .andWhereBetween("sleep_start", [d1, d2])
+      .limit(7);
   },
 
   editSleepInfo(id, info) {
