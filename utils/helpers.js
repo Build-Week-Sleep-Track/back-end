@@ -55,6 +55,11 @@ module.exports = {
 
   editSleepInfo(id, info) {
     return db("users_sleep").where({ id }).update(info);
+
+    // return db.raw(
+    //   `update users_sleep set sleep_start = '${info.sleep_start}', start_score = ${info.start_score}, sleep_end = ${info.sleep_end}, end_score =${info.end_score}, overall_score = ${info.overall_score}  where id = ${id}`
+    //   //   [`${info.sleep_start}`, info.start_score, Number(id)]
+    // );
   },
 
   //deletes a sleep_session, requires user id and sleep_session id
