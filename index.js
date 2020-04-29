@@ -1,19 +1,22 @@
-const express = require("express");
-const server = express();
-const cors = require("cors");
-const helmet = require("helmet");
-require("dotenv").config();
-const port = process.env.PORT || 4500;
-const authRouter = require("./api/authRouter");
-const userRouter = require("./api/userRouter");
-const authenticator = require("./api/authenticator");
-const db = require("./data/dbConfig");
+// const express = require("express");
+// const server = express();
+// const cors = require("cors");
+// const helmet = require("helmet");
+// require("dotenv").config();
+// const port = process.env.PORT || 4500;
+// const authRouter = require("./api/authRouter");
+// const userRouter = require("./api/userRouter");
+// const authenticator = require("./api/authenticator");
+// const db = require("./data/dbConfig");
 
-server.use(express.json());
-server.use(cors());
-server.use(helmet());
-server.use("/api/auth", authRouter);
-server.use("/api/users", authenticator, userRouter);
+// server.use(express.json());
+// server.use(cors());
+// server.use(helmet());
+// server.use("/api/auth", authRouter);
+// server.use("/api/users", authenticator, userRouter);
+
+const server = require("./api/server");
+const port = process.env.PORT || 4500;
 
 server.get("/", (req, res) => {
   db("users")
